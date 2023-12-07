@@ -131,7 +131,6 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: |
-            ghcr.io/${{ env.DOCKER_IMAGE_NAME }}
             ${{ env.DOCKERHUB_IMAGE_NAME }}
           tag-edge: true
           tag-semver: |
