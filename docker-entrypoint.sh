@@ -14,6 +14,9 @@ case "$ENABLE_IPV6_LOWER" in
         ;;
 esac
 
+# Export BIND_CONFIG for envsubst
+export BIND_CONFIG
+
 # Process the HAProxy configuration template
 envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
 cat /usr/local/etc/haproxy/haproxy.cfg
@@ -31,4 +34,3 @@ if [ "$#" -eq 0 ] || [ "$1" = 'haproxy' ]; then
 fi
 
 exec "$@"
-
