@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -x
 
 # Normalize the input for ENABLE_IPV6 to lowercase
 ENABLE_IPV6_LOWER=$(echo "$ENABLE_IPV6" | tr '[:upper:]' '[:lower:]')
