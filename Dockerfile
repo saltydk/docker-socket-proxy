@@ -35,4 +35,5 @@ RUN apk add --no-cache --virtual .gettext gettext \
     && mv /usr/bin/envsubst /usr/local/bin/ \
     && apk del .gettext
 COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg.template
