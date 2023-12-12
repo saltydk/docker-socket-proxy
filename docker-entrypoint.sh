@@ -2,7 +2,10 @@
 set -e
 set -x # Debug mode: Print each command to stderr before executing it
 
-echo "Starting entrypoint script..."
+# Redirect stderr to stdout
+exec 2>&1
+
+echo "Entrypoint script started..."
 
 # Normalize the input for ENABLE_IPV6 to lowercase
 echo "Processing ENABLE_IPV6 environment variable..."
