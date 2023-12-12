@@ -23,6 +23,8 @@ echo "BIND_CONFIG set to: $BIND_CONFIG"
 echo "Generating HAProxy configuration..."
 envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
 
+cat /usr/local/etc/haproxy/haproxy.cfg
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
     set -- haproxy "$@"
