@@ -1,9 +1,13 @@
 #!/bin/sh
 set -e
-set -x
+set -x # Debug mode: Print each command to stderr before executing it
+
+echo "Starting entrypoint script..."
 
 # Normalize the input for ENABLE_IPV6 to lowercase
+echo "Processing ENABLE_IPV6 environment variable..."
 ENABLE_IPV6_LOWER=$(echo "$ENABLE_IPV6" | tr '[:upper:]' '[:lower:]')
+echo "ENABLE_IPV6_LOWER set to: $ENABLE_IPV6_LOWER"
 
 # Check for different representations of 'true' and set BIND_CONFIG
 case "$ENABLE_IPV6_LOWER" in
@@ -11,24 +15,28 @@ case "$ENABLE_IPV6_LOWER" in
         BIND_CONFIG="[::]:2375 v4v6"
         ;;
     *)
-        BIND_CONFIG=":2375"
+        BIND_CONFIG="0.0.0.0:2375"
         ;;
 esac
+echo "BIND_CONFIG set to: $BIND_CONFIG"
 
 # Process the HAProxy configuration template
-envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
+echo "Generating HAProxy configuration..."
+envsubst < /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg || {
+    echo "Error processing HAProxy configuration template."
+    exit 1
+}
 
-# first arg is `-f` or `--some-option`
+# Check for command line arguments
+echo "Processing command line arguments..."
 if [ "${1#-}" != "$1" ]; then
     set -- haproxy "$@"
 fi
 
 if [ "$1" = 'haproxy' ]; then
-    shift # "haproxy"
-    # if the user wants "haproxy", let's add a couple useful flags
-    #   -W  -- "master-worker mode" (similar to the old "haproxy-systemd-wrapper"; allows for reload via "SIGUSR2")
-    #   -db -- disables background mode
+    shift # remove "haproxy"
     set -- haproxy -W -db "$@"
 fi
 
+echo "Executing command: $@"
 exec "$@"
