@@ -30,3 +30,4 @@ if [ "$#" -eq 0 ] || [ "$1" = 'haproxy' ]; then
 fi
 
 exec "$@"
+
