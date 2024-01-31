@@ -26,7 +26,7 @@ if [ "$#" -eq 0 ] || [ "$1" = 'haproxy' ]; then
     if [ "$1" = 'haproxy' ]; then
         shift
     fi
-    set -- haproxy -W -db "$@"
+    set -- haproxy -W -db -f /usr/local/etc/haproxy/haproxy.cfg "$@"
 fi
 
 exec "$@"
