@@ -1,16 +1,16 @@
 #!/bin/sh
 set -e
 
-# Normalize the input for ENABLE_IPV6 to lowercase
-ENABLE_IPV6_LOWER=$(echo "$ENABLE_IPV6" | tr '[:upper:]' '[:lower:]')
+# Normalize the input for DISABLE_IPV6 to lowercase
+DISABLE_IPV6_LOWER=$(echo "$DISABLE_IPV6" | tr '[:upper:]' '[:lower:]')
 
 # Check for different representations of 'true' and set BIND_CONFIG
-case "$ENABLE_IPV6_LOWER" in
+case "$DISABLE_IPV6_LOWER" in
     1|true|yes)
-        BIND_CONFIG="[::]:2375 v4v6"
+        BIND_CONFIG=":2375"
         ;;
     *)
-        BIND_CONFIG=":2375"
+        BIND_CONFIG="[::]:2375 v4v6"
         ;;
 esac
 
