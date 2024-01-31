@@ -30,4 +30,7 @@ ENV ALLOW_RESTARTS=0 \
     TASKS=0 \
     VERSION=1 \
     VOLUMES=0
-COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+COPY docker-entrypoint.sh /
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg.template
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
