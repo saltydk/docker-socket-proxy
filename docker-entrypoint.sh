@@ -17,7 +17,7 @@ case "$DISABLE_IPV6_LOWER" in
 esac
 
 # Process the HAProxy configuration template using sed
-sed "s/\${BIND_CONFIG}/$BIND_CONFIG/g" /usr/local/etc/haproxy/haproxy.cfg.template > /usr/local/etc/haproxy/haproxy.cfg
+sed -i "s/\${BIND_CONFIG}/$BIND_CONFIG/g" /usr/local/etc/haproxy/haproxy.cfg
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
